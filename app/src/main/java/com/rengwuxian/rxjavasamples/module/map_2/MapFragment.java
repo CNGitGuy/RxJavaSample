@@ -27,7 +27,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
@@ -62,14 +61,14 @@ public class MapFragment extends BaseFragment {
     private void loadPage(int page) {
         swipeRefreshLayout.setRefreshing(true);
         unsubscribe();
-        disposable = Network.getGankApi()
+        disposable = Network.getApiGetGank()
                 .getBeauties(10, page)
                 .map(GankBeautyResultToItemsMapper.getInstance())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<List<Item>>() {
                     @Override
-                    public void accept(@NonNull List<Item> items) throws Exception {
+                    public void accept(@NonNull List<Item> items) throws Exception {//下载图片成功显示
                         swipeRefreshLayout.setRefreshing(false);
                         pageTv.setText(getString(R.string.page_with_number, MapFragment.this.page));
                         adapter.setItems(items);

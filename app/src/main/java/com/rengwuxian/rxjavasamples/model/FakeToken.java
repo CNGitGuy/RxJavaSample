@@ -2,9 +2,15 @@
 
 package com.rengwuxian.rxjavasamples.model;
 
+/**
+ * 伪造的Token
+ */
 public class FakeToken {
-    public String token;
-    public boolean expired;
+    /**
+     * 取到的数据
+     */
+    private String token;
+    private boolean expired;
 
     public FakeToken() {
     }
@@ -12,4 +18,21 @@ public class FakeToken {
     public FakeToken(boolean expired) {
         this.expired = expired;
     }
+
+    public String getToken() {
+        return token;
+    }
+
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public void setExpired(boolean expired) {
+        this.expired = expired;
+    }
+
 }

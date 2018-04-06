@@ -1,6 +1,6 @@
 // (c)2016 Flipboard Inc, All Rights Reserved.
 
-package com.rengwuxian.rxjavasamples.network.api;
+package com.rengwuxian.rxjavasamples.network;
 
 import com.rengwuxian.rxjavasamples.model.ZhuangbiImage;
 
@@ -10,7 +10,12 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 import io.reactivex.Observable;
 
-public interface ZhuangbiApi {
+public interface ApiGetZhuangbi {
+    /**
+     *
+     * @param query
+     * @return
+     */
     @GET("search")
     Observable<List<ZhuangbiImage>> search(@Query("q") String query);
 }

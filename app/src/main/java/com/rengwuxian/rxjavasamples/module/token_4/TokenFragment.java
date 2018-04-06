@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.rengwuxian.rxjavasamples.BaseFragment;
 import com.rengwuxian.rxjavasamples.network.Network;
 import com.rengwuxian.rxjavasamples.R;
-import com.rengwuxian.rxjavasamples.network.api.FakeApi;
+import com.rengwuxian.rxjavasamples.network.ApiFake;
 import com.rengwuxian.rxjavasamples.model.FakeThing;
 import com.rengwuxian.rxjavasamples.model.FakeToken;
 
@@ -37,19 +37,19 @@ public class TokenFragment extends BaseFragment {
     void upload() {
         swipeRefreshLayout.setRefreshing(true);
         unsubscribe();
-        final FakeApi fakeApi = Network.getFakeApi();
-        disposable = fakeApi.getFakeToken("fake_auth_code")
+        final ApiFake apiFake = Network.getApiFake();
+        disposable = apiFake.getFakeTokenObservable("fake_auth_code")
                 .flatMap(new Function<FakeToken, Observable<FakeThing>>() {
                     @Override
                     public Observable<FakeThing> apply(FakeToken fakeToken) {
-                        return fakeApi.getFakeData(fakeToken);
+                        return apiFake.getFakeDataObservable(fakeToken);
                     }
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<FakeThing>() {
                     @Override
-                    public void accept(FakeThing fakeData) {
+                    public void accept(FakeThing fakeData) {//返回Disposable对象，在界面退出或者变换的时候需要dispose工作流
                         swipeRefreshLayout.setRefreshing(false);
                         tokenTv.setText(getString(R.string.got_data, fakeData.id, fakeData.name));
                     }

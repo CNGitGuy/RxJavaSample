@@ -14,11 +14,11 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.rengwuxian.rxjavasamples.BaseFragment;
-import com.rengwuxian.rxjavasamples.network.Network;
 import com.rengwuxian.rxjavasamples.R;
 import com.rengwuxian.rxjavasamples.adapter.ItemListAdapter;
 import com.rengwuxian.rxjavasamples.model.Item;
 import com.rengwuxian.rxjavasamples.model.ZhuangbiImage;
+import com.rengwuxian.rxjavasamples.network.Network;
 import com.rengwuxian.rxjavasamples.util.GankBeautyResultToItemsMapper;
 
 import java.util.ArrayList;
@@ -28,7 +28,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.BiFunction;
@@ -36,32 +35,35 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class ZipFragment extends BaseFragment {
-    @BindView(R.id.gridRv) RecyclerView gridRv;
-    @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.gridRv)
+    RecyclerView gridRv;
+    @BindView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
     ItemListAdapter adapter = new ItemListAdapter();
 
     @OnClick(R.id.zipLoadBt)
     void load() {
         swipeRefreshLayout.setRefreshing(true);
         unsubscribe();
-        disposable = Observable.zip(Network.getGankApi().getBeauties(200, 1).map(GankBeautyResultToItemsMapper.getInstance()),
-                Network.getZhuangbiApi().search("装逼"),
-                new BiFunction<List<Item>, List<ZhuangbiImage>, List<Item>>() {
-                    @Override
-                    public List<Item> apply(List<Item> gankItems, List<ZhuangbiImage> zhuangbiImages) {
-                        List<Item> items = new ArrayList<Item>();
-                        for (int i = 0; i < gankItems.size() / 2 && i < zhuangbiImages.size(); i++) {
-                            items.add(gankItems.get(i * 2));
-                            items.add(gankItems.get(i * 2 + 1));
-                            Item zhuangbiItem = new Item();
-                            ZhuangbiImage zhuangbiImage = zhuangbiImages.get(i);
-                            zhuangbiItem.description = zhuangbiImage.description;
-                            zhuangbiItem.imageUrl = zhuangbiImage.image_url;
-                            items.add(zhuangbiItem);
-                        }
-                        return items;
-                    }
-                })
+        disposable = Observable
+                .zip(Network.getApiGetGank().getBeauties(200, 1).map(GankBeautyResultToItemsMapper.getInstance()),
+                        Network.getApiGetZhuangbi().search("装逼"),
+                        new BiFunction<List<Item>, List<ZhuangbiImage>, List<Item>>() {
+                            @Override
+                            public List<Item> apply(List<Item> gankItems, List<ZhuangbiImage> zhuangbiImages) {
+                                List<Item> items = new ArrayList<Item>();
+                                for (int i = 0; i < gankItems.size() / 2 && i < zhuangbiImages.size(); i++) {
+                                    items.add(gankItems.get(i * 2));
+                                    items.add(gankItems.get(i * 2 + 1));
+                                    Item zhuangbiItem = new Item();
+                                    ZhuangbiImage zhuangbiImage = zhuangbiImages.get(i);
+                                    zhuangbiItem.description = zhuangbiImage.description;
+                                    zhuangbiItem.imageUrl = zhuangbiImage.image_url;
+                                    items.add(zhuangbiItem);
+                                }
+                                return items;
+                            }
+                        })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<List<Item>>() {

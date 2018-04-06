@@ -1,6 +1,6 @@
 // (c)2016 Flipboard Inc, All Rights Reserved.
 
-package com.rengwuxian.rxjavasamples.network.api;
+package com.rengwuxian.rxjavasamples.network;
 
 import android.support.annotation.NonNull;
 
@@ -12,10 +12,16 @@ import java.util.Random;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 
-public class FakeApi {
+public class ApiFake {
     Random random = new Random();
 
-    public Observable<FakeToken> getFakeToken(@NonNull String fakeAuth) {
+    /**
+     * 获取包含伪造Token的Observable
+     *
+     * @param fakeAuth
+     * @return
+     */
+    public Observable<FakeToken> getFakeTokenObservable(@NonNull String fakeAuth) {
         return Observable.just(fakeAuth)
                 .map(new Function<String, FakeToken>() {
                     @Override
@@ -29,17 +35,28 @@ public class FakeApi {
                         }
 
                         FakeToken fakeToken = new FakeToken();
-                        fakeToken.token = createToken();
+                        fakeToken.setToken(createToken());
                         return fakeToken;
                     }
                 });
     }
 
+    /**
+     * 生成token
+     *
+     * @return
+     */
     private static String createToken() {
         return "fake_token_" + System.currentTimeMillis() % 10000;
     }
 
-    public Observable<FakeThing> getFakeData(FakeToken fakeToken) {
+    /**
+     * 获取包含伪造数据Observable
+     *
+     * @param fakeToken
+     * @return
+     */
+    public Observable<FakeThing> getFakeDataObservable(FakeToken fakeToken) {
         return Observable.just(fakeToken)
                 .map(new Function<FakeToken, FakeThing>() {
                     @Override
@@ -52,7 +69,7 @@ public class FakeApi {
                             e.printStackTrace();
                         }
 
-                        if (fakeToken.expired) {
+                        if (fakeToken.isExpired()) {
                             throw new IllegalArgumentException("Token expired!");
                         }
 

@@ -14,6 +14,9 @@ import java.util.List;
 
 import io.reactivex.functions.Function;
 
+/**
+ * 将请求到的结果集转换成本地使用的List<Item>
+ */
 public class GankBeautyResultToItemsMapper implements Function<GankBeautyResult, List<Item>> {
     private static GankBeautyResultToItemsMapper INSTANCE = new GankBeautyResultToItemsMapper();
 
@@ -26,11 +29,11 @@ public class GankBeautyResultToItemsMapper implements Function<GankBeautyResult,
 
     @Override
     public List<Item> apply(GankBeautyResult gankBeautyResult) {
-        List<GankBeauty> gankBeauties = gankBeautyResult.beauties;
+        List<GankBeauty> gankBeauties = gankBeautyResult.beauties;//get Beauty list
         List<Item> items = new ArrayList<>(gankBeauties.size());
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SS'Z'");
         SimpleDateFormat outputFormat = new SimpleDateFormat("yy/MM/dd HH:mm:ss");
-        for (GankBeauty gankBeauty : gankBeauties) {
+        for (GankBeauty gankBeauty : gankBeauties) {//将每个GankBeauty转换成Item对象
             Item item = new Item();
             try {
                 Date date = inputFormat.parse(gankBeauty.createdAt);

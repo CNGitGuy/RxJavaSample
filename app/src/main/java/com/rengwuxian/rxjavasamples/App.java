@@ -7,6 +7,10 @@ import android.app.Application;
 public class App extends Application {
     private static App INSTANCE;
 
+    /**
+     * 获取APP的上下文
+     * @return
+     */
     public static App getInstance() {
         return INSTANCE;
     }

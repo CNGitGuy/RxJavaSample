@@ -23,16 +23,15 @@ public class ZhuangbiListAdapter extends RecyclerView.Adapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.grid_item, parent, false);
         return new DebounceViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         DebounceViewHolder debounceViewHolder = (DebounceViewHolder) holder;
-        ZhuangbiImage image = images.get(position);
-        Glide.with(holder.itemView.getContext()).load(image.image_url).into(debounceViewHolder.imageIv);
-        debounceViewHolder.descriptionTv.setText(image.description);
+        debounceViewHolder.setView(images.get(position));
     }
 
     @Override
@@ -46,11 +45,21 @@ public class ZhuangbiListAdapter extends RecyclerView.Adapter {
     }
 
     static class DebounceViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.imageIv) ImageView imageIv;
-        @BindView(R.id.descriptionTv) TextView descriptionTv;
+        @BindView(R.id.imageIv)
+        ImageView imageIv;
+        @BindView(R.id.descriptionTv)
+        TextView descriptionTv;
+
         public DebounceViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        void setView(ZhuangbiImage image) {
+            Glide.with(itemView.getContext())
+                    .load(image.image_url)
+                    .into(imageIv);//使用Glide加载图片显示
+            descriptionTv.setText(image.description);
         }
     }
 

@@ -2,10 +2,6 @@
 
 package com.rengwuxian.rxjavasamples.network;
 
-import com.rengwuxian.rxjavasamples.network.api.FakeApi;
-import com.rengwuxian.rxjavasamples.network.api.GankApi;
-import com.rengwuxian.rxjavasamples.network.api.ZhuangbiApi;
-
 import okhttp3.OkHttpClient;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
@@ -14,43 +10,55 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Network {
-    private static ZhuangbiApi zhuangbiApi;
-    private static GankApi gankApi;
-    private static FakeApi fakeApi;
+    private static ApiGetZhuangbi apiGetZhuangbi;
+    private static ApiGetGank apiGetGank;
+    private static ApiFake apiFake;
     private static OkHttpClient okHttpClient = new OkHttpClient();
     private static Converter.Factory gsonConverterFactory = GsonConverterFactory.create();
     private static CallAdapter.Factory rxJavaCallAdapterFactory = RxJava2CallAdapterFactory.create();
 
-    public static ZhuangbiApi getZhuangbiApi() {
-        if (zhuangbiApi == null) {
+    /**
+     * 单例，获取Zhuangbi的Observable对象，
+     * @return
+     */
+    public static ApiGetZhuangbi getApiGetZhuangbi() {//不是线程安全的实现
+        if (apiGetZhuangbi == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .client(okHttpClient)
                     .baseUrl("http://www.zhuangbi.info/")
                     .addConverterFactory(gsonConverterFactory)
                     .addCallAdapterFactory(rxJavaCallAdapterFactory)
                     .build();
-            zhuangbiApi = retrofit.create(ZhuangbiApi.class);
+            apiGetZhuangbi = retrofit.create(ApiGetZhuangbi.class);
         }
-        return zhuangbiApi;
+        return apiGetZhuangbi;
     }
 
-    public static GankApi getGankApi() {
-        if (gankApi == null) {
+    /**
+     * 单例的API GetGank
+     * @return
+     */
+    public static ApiGetGank getApiGetGank() {//不是线程安全的实现
+        if (apiGetGank == null) {
             Retrofit retrofit = new Retrofit.Builder()
                     .client(okHttpClient)
                     .baseUrl("http://gank.io/api/")
                     .addConverterFactory(gsonConverterFactory)
                     .addCallAdapterFactory(rxJavaCallAdapterFactory)
                     .build();
-            gankApi = retrofit.create(GankApi.class);
+            apiGetGank = retrofit.create(ApiGetGank.class);
         }
-        return gankApi;
+        return apiGetGank;
     }
 
-    public static FakeApi getFakeApi() {
-        if (fakeApi == null) {
-            fakeApi = new FakeApi();
+    /**
+     * 单例的APIFake
+     * @return
+     */
+    public static ApiFake getApiFake() {//不是线程安全的实现
+        if (apiFake == null) {
+            apiFake = new ApiFake();
         }
-        return fakeApi;
+        return apiFake;
     }
 }

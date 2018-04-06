@@ -25,7 +25,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
@@ -48,7 +47,7 @@ public class ElementaryFragment extends BaseFragment {
     }
 
     private void search(String key) {
-        disposable = Network.getZhuangbiApi()
+        disposable = Network.getApiGetZhuangbi()
                 .search(key)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -18,14 +18,12 @@ import com.rengwuxian.rxjavasamples.BaseFragment;
 import com.rengwuxian.rxjavasamples.R;
 import com.rengwuxian.rxjavasamples.adapter.ItemListAdapter;
 import com.rengwuxian.rxjavasamples.model.Item;
-import com.rengwuxian.rxjavasamples.module.cache_6.data.Data;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
@@ -61,7 +59,8 @@ public class CacheFragment extends BaseFragment {
                     public void accept(@NonNull List<Item> items) throws Exception {
                         swipeRefreshLayout.setRefreshing(false);
                         int loadingTime = (int) (System.currentTimeMillis() - startingTime);
-                        loadingTimeTv.setText(getString(R.string.loading_time_and_source, loadingTime, Data.getInstance().getDataSourceText()));
+                        loadingTimeTv.setText(getString(R.string.loading_time_and_source,
+                                loadingTime, Data.getInstance().getDataSourceText()));
                         adapter.setItems(items);
                     }
                 }, new Consumer<Throwable>() {

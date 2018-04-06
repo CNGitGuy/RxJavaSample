@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.rengwuxian.rxjavasamples.BaseFragment;
 import com.rengwuxian.rxjavasamples.network.Network;
 import com.rengwuxian.rxjavasamples.R;
-import com.rengwuxian.rxjavasamples.network.api.FakeApi;
+import com.rengwuxian.rxjavasamples.network.ApiFake;
 import com.rengwuxian.rxjavasamples.model.FakeThing;
 import com.rengwuxian.rxjavasamples.model.FakeToken;
 
@@ -37,7 +37,7 @@ public class TokenAdvancedFragment extends BaseFragment {
 
     @OnClick(R.id.invalidateTokenBt)
     void invalidateToken() {
-        cachedFakeToken.expired = true;
+        cachedFakeToken.setExpired(true);
         Toast.makeText(getActivity(), R.string.token_destroyed, Toast.LENGTH_SHORT).show();
     }
 
@@ -46,14 +46,14 @@ public class TokenAdvancedFragment extends BaseFragment {
         tokenUpdated = false;
         swipeRefreshLayout.setRefreshing(true);
         unsubscribe();
-        final FakeApi fakeApi = Network.getFakeApi();
+        final ApiFake apiFake = Network.getApiFake();
         disposable = Observable.just(1)
                 .flatMap(new Function<Object, Observable<FakeThing>>() {
                     @Override
                     public Observable<FakeThing> apply(Object o) {
-                        return cachedFakeToken.token == null
+                        return cachedFakeToken.getToken() == null
                                 ? Observable.<FakeThing>error(new NullPointerException("Token is null!"))
-                                : fakeApi.getFakeData(cachedFakeToken);
+                                : apiFake.getFakeDataObservable(cachedFakeToken);
                     }
                 })
                 .retryWhen(new Function<Observable<? extends Throwable>, Observable<?>>() {
@@ -63,13 +63,13 @@ public class TokenAdvancedFragment extends BaseFragment {
                             @Override
                             public Observable<?> apply(Throwable throwable) {
                                 if (throwable instanceof IllegalArgumentException || throwable instanceof NullPointerException) {
-                                    return fakeApi.getFakeToken("fake_auth_code")
+                                    return apiFake.getFakeTokenObservable("fake_auth_code")
                                             .doOnNext(new Consumer<FakeToken>() {
                                                 @Override
                                                 public void accept(FakeToken fakeToken) {
                                                     tokenUpdated = true;
-                                                    cachedFakeToken.token = fakeToken.token;
-                                                    cachedFakeToken.expired = fakeToken.expired;
+                                                    cachedFakeToken.setToken(fakeToken.getToken());
+                                                    cachedFakeToken.setExpired(fakeToken.isExpired());
                                                 }
                                             });
                                 }
@@ -84,7 +84,7 @@ public class TokenAdvancedFragment extends BaseFragment {
                     @Override
                     public void accept(FakeThing fakeData) {
                         swipeRefreshLayout.setRefreshing(false);
-                        String token = cachedFakeToken.token;
+                        String token = cachedFakeToken.getToken();
                         if (tokenUpdated) {
                             token += "(" + getString(R.string.updated) + ")";
                         }
