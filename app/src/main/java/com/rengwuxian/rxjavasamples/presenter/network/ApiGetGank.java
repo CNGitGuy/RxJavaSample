@@ -1,16 +1,17 @@
 // (c)2016 Flipboard Inc, All Rights Reserved.
 
-package com.rengwuxian.rxjavasamples.network;
+package com.rengwuxian.rxjavasamples.presenter.network;
 
 import com.rengwuxian.rxjavasamples.model.GankBeautyResult;
 
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import io.reactivex.Observable;
 
 public interface ApiGetGank {
     /**
      * get beautiful pictures
+     *
      * @param number，一页有多少张图片
      * @param page，获取第几页
      * @return 获取图片的结果

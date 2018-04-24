@@ -36,6 +36,7 @@ class DataCache {
 
     /**
      * 从本地文件获取图片资源的description和image URL
+     *
      * @return
      */
     public List<Item> readItems() {
@@ -58,6 +59,7 @@ class DataCache {
 
     /**
      * 将所有的的items都存储到本地
+     *
      * @param items
      */
     public void writeItems(List<Item> items) {

@@ -1,27 +1,31 @@
-package com.rengwuxian.rxjavasamples;
+package com.rengwuxian.rxjavasamples.view;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.app.Fragment;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.rengwuxian.rxjavasamples.module.token_advanced_5.TokenAdvancedFragment;
-import com.rengwuxian.rxjavasamples.module.token_4.TokenFragment;
+import com.rengwuxian.rxjavasamples.R;
 import com.rengwuxian.rxjavasamples.module.cache_6.CacheFragment;
-import com.rengwuxian.rxjavasamples.module.zip_3.ZipFragment;
 import com.rengwuxian.rxjavasamples.module.elementary_1.ElementaryFragment;
 import com.rengwuxian.rxjavasamples.module.map_2.MapFragment;
+import com.rengwuxian.rxjavasamples.module.token_4.TokenFragment;
+import com.rengwuxian.rxjavasamples.module.token_advanced_5.TokenAdvancedFragment;
+import com.rengwuxian.rxjavasamples.module.zip_3.ZipFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
-    @BindView(android.R.id.tabs) TabLayout tabLayout;
-    @BindView(R.id.viewPager) ViewPager viewPager;
-    @BindView(R.id.toolBar) Toolbar toolBar;
+    @BindView(android.R.id.tabs)
+    TabLayout tabLayout;
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
+    @BindView(R.id.toolBar)
+    Toolbar toolBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,6 +1,6 @@
 // (c)2016 Flipboard Inc, All Rights Reserved.
 
-package com.rengwuxian.rxjavasamples.network;
+package com.rengwuxian.rxjavasamples.presenter.network;
 
 import okhttp3.OkHttpClient;
 import retrofit2.CallAdapter;
@@ -19,14 +19,15 @@ public class Network {
 
     /**
      * 单例，获取Zhuangbi的Observable对象，
+     *
      * @return
      */
     public static ApiGetZhuangbi getApiGetZhuangbi() {//不是线程安全的实现
         if (apiGetZhuangbi == null) {
             Retrofit retrofit = new Retrofit.Builder()
-                    .client(okHttpClient)
-                    .baseUrl("http://www.zhuangbi.info/")
-                    .addConverterFactory(gsonConverterFactory)
+                    .client(okHttpClient)//添加OK Socket client
+                    .baseUrl("http://www.zhuangbi.info/")//添加base URL
+                    .addConverterFactory(gsonConverterFactory)//添加Retrofit的Json解析器
                     .addCallAdapterFactory(rxJavaCallAdapterFactory)
                     .build();
             apiGetZhuangbi = retrofit.create(ApiGetZhuangbi.class);
@@ -36,6 +37,7 @@ public class Network {
 
     /**
      * 单例的API GetGank
+     *
      * @return
      */
     public static ApiGetGank getApiGetGank() {//不是线程安全的实现
@@ -53,6 +55,7 @@ public class Network {
 
     /**
      * 单例的APIFake
+     *
      * @return
      */
     public static ApiFake getApiFake() {//不是线程安全的实现

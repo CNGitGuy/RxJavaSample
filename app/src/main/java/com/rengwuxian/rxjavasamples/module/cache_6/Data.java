@@ -8,8 +8,8 @@ import android.support.annotation.NonNull;
 import com.rengwuxian.rxjavasamples.App;
 import com.rengwuxian.rxjavasamples.R;
 import com.rengwuxian.rxjavasamples.model.Item;
-import com.rengwuxian.rxjavasamples.network.Network;
-import com.rengwuxian.rxjavasamples.util.GankBeautyResultToItemsMapper;
+import com.rengwuxian.rxjavasamples.presenter.network.Network;
+import com.rengwuxian.rxjavasamples.presenter.utils.GankBeautyResultToItemsMapper;
 
 import java.util.List;
 
@@ -87,7 +87,7 @@ class Data {
                 .doOnNext(new Consumer<List<Item>>() {
                     @Override
                     public void accept(List<Item> items) {//获取数据成功，保存数据（description&image URL）到本地
-                         DataCache.getInstance().writeItems(items);
+                        DataCache.getInstance().writeItems(items);
                     }
                 })
                 .subscribe(new Consumer<List<Item>>() {

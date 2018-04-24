@@ -1,6 +1,6 @@
 // (c)2016 Flipboard Inc, All Rights Reserved.
 
-package com.rengwuxian.rxjavasamples.network;
+package com.rengwuxian.rxjavasamples.presenter.network;
 
 import android.support.annotation.NonNull;
 

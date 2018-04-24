@@ -1,6 +1,6 @@
 // (c)2016 Flipboard Inc, All Rights Reserved.
 
-package com.rengwuxian.rxjavasamples.adapter;
+package com.rengwuxian.rxjavasamples.view.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,20 +11,20 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.rengwuxian.rxjavasamples.R;
-import com.rengwuxian.rxjavasamples.model.ZhuangbiImage;
+import com.rengwuxian.rxjavasamples.model.Item;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ZhuangbiListAdapter extends RecyclerView.Adapter {
-    List<ZhuangbiImage> images;
+public class ItemListAdapter extends RecyclerView.Adapter {
+    List<Item> images;
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.grid_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext())//get layout inflater
+                .inflate(R.layout.grid_item, parent, false);//inflate view
         return new DebounceViewHolder(view);
     }
 
@@ -39,7 +39,7 @@ public class ZhuangbiListAdapter extends RecyclerView.Adapter {
         return images == null ? 0 : images.size();
     }
 
-    public void setImages(List<ZhuangbiImage> images) {
+    public void setItems(List<Item> images) {
         this.images = images;
         notifyDataSetChanged();
     }
@@ -55,10 +55,10 @@ public class ZhuangbiListAdapter extends RecyclerView.Adapter {
             ButterKnife.bind(this, itemView);
         }
 
-        void setView(ZhuangbiImage image) {
+        void setView(Item image) {
             Glide.with(itemView.getContext())
-                    .load(image.image_url)
-                    .into(imageIv);//使用Glide加载图片显示
+                    .load(image.imageUrl)
+                    .into(imageIv);
             descriptionTv.setText(image.description);
         }
     }

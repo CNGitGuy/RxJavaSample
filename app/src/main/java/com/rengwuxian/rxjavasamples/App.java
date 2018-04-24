@@ -9,6 +9,7 @@ public class App extends Application {
 
     /**
      * 获取APP的上下文
+     *
      * @return
      */
     public static App getInstance() {

@@ -1,6 +1,6 @@
 // (c)2016 Flipboard Inc, All Rights Reserved.
 
-package com.rengwuxian.rxjavasamples.util;
+package com.rengwuxian.rxjavasamples.presenter.utils;
 
 import com.rengwuxian.rxjavasamples.model.GankBeauty;
 import com.rengwuxian.rxjavasamples.model.GankBeautyResult;

@@ -1,9 +1,11 @@
 // (c)2016 Flipboard Inc, All Rights Reserved.
 
-package com.rengwuxian.rxjavasamples;
+package com.rengwuxian.rxjavasamples.view;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+
+import com.rengwuxian.rxjavasamples.R;
 
 import butterknife.OnClick;
 import io.reactivex.disposables.Disposable;

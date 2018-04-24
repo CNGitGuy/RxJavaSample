@@ -11,5 +11,6 @@ import java.util.List;
  */
 public class GankBeautyResult {
     public boolean error;
-    public @SerializedName("results") List<GankBeauty> beauties;
+    public @SerializedName("results")
+    List<GankBeauty> beauties;
 }

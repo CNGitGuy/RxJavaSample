@@ -14,11 +14,11 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.rengwuxian.rxjavasamples.BaseFragment;
-import com.rengwuxian.rxjavasamples.network.Network;
+import com.rengwuxian.rxjavasamples.view.BaseFragment;
 import com.rengwuxian.rxjavasamples.R;
-import com.rengwuxian.rxjavasamples.adapter.ZhuangbiListAdapter;
+import com.rengwuxian.rxjavasamples.view.adapter.ZhuangbiListAdapter;
 import com.rengwuxian.rxjavasamples.model.ZhuangbiImage;
+import com.rengwuxian.rxjavasamples.presenter.network.Network;
 
 import java.util.List;
 
@@ -31,8 +31,10 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class ElementaryFragment extends BaseFragment {
-    @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.gridRv) RecyclerView gridRv;
+    @BindView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.gridRv)
+    RecyclerView gridRv;
 
     ZhuangbiListAdapter adapter = new ZhuangbiListAdapter();
 

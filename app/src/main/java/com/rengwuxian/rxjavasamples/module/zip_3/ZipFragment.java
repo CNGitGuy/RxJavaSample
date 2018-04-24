@@ -13,13 +13,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.rengwuxian.rxjavasamples.BaseFragment;
 import com.rengwuxian.rxjavasamples.R;
-import com.rengwuxian.rxjavasamples.adapter.ItemListAdapter;
 import com.rengwuxian.rxjavasamples.model.Item;
 import com.rengwuxian.rxjavasamples.model.ZhuangbiImage;
-import com.rengwuxian.rxjavasamples.network.Network;
-import com.rengwuxian.rxjavasamples.util.GankBeautyResultToItemsMapper;
+import com.rengwuxian.rxjavasamples.presenter.network.Network;
+import com.rengwuxian.rxjavasamples.presenter.utils.GankBeautyResultToItemsMapper;
+import com.rengwuxian.rxjavasamples.view.BaseFragment;
+import com.rengwuxian.rxjavasamples.view.adapter.ItemListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

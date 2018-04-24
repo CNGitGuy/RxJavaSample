@@ -14,9 +14,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.rengwuxian.rxjavasamples.BaseFragment;
+import com.rengwuxian.rxjavasamples.view.BaseFragment;
 import com.rengwuxian.rxjavasamples.R;
-import com.rengwuxian.rxjavasamples.adapter.ItemListAdapter;
+import com.rengwuxian.rxjavasamples.view.adapter.ItemListAdapter;
 import com.rengwuxian.rxjavasamples.model.Item;
 
 import java.util.List;
@@ -28,9 +28,12 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
 
 public class CacheFragment extends BaseFragment {
-    @BindView(R.id.loadingTimeTv) TextView loadingTimeTv;
-    @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.cacheRv) RecyclerView cacheRv;
+    @BindView(R.id.loadingTimeTv)
+    TextView loadingTimeTv;
+    @BindView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.cacheRv)
+    RecyclerView cacheRv;
     ItemListAdapter adapter = new ItemListAdapter();
     private long startingTime;
 
